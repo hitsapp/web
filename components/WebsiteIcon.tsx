@@ -26,7 +26,11 @@ export const WebsiteIcon = ({
           onError={() => setImgFailure(true)}
         />
       ) : (
-        <span>{new URL(alt).hostname.charAt(0).toUpperCase()}</span>
+        <div
+          className={`${className} bg-secondary py-1 px-3 ml-3 text-sm rounded-full`}
+        >
+          {alt.charAt(1)}
+        </div>
       )}
     </>
   );

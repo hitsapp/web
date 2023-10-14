@@ -27,7 +27,7 @@ export const Hit = ({ hit, index }: { hit: HitType, index: number }) => {
         <WebsiteIcon
           className={iconMarginClasses}
           src={image}
-          alt={hit.url}
+          alt={pathname}
           size={30}
         />
         <a href={hit.url} target="_blank" rel="noopener noreferrer">
