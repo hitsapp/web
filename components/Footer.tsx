@@ -21,7 +21,7 @@ export const Footer = () => {
             >
               {contributor.name}
             </a>
-            {i < creators.length - 1 && " & "}
+            {i < creators.length - 1 ? " & " : null}
           </span>
         ))}
       </div>

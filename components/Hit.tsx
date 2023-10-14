@@ -4,8 +4,8 @@ import clsx from "clsx";
 import { WebsiteIcon } from "./WebsiteIcon";
 import { Hit as HitType } from "@/types/hit";
 
-export const Hit = ({ hit }: { hit: HitType & { i: number } }) => {
-  const lbPlace = hit.i + 1;
+export const Hit = ({ hit, index }: { hit: HitType, index: number }) => {
+  const lbPlace = index + 1;
   const { image, pathname } = metadata(hit.url);
 
   const labelClasses = clsx({

@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { Footer } from "@/components/Footer";
 import { Hit } from "@/components/Hit";
 import { Input } from "@/components/Input";
-import { API_URL } from "@/lib/constants";
+import { API_URL, FRONTEND_URL } from "@/lib/constants";
 import { Hit as HitType } from "@/types/hit";
 import { HitResponse } from "@/types/hit-response";
 import Head from "next/head";
@@ -20,7 +20,7 @@ export default function Home({ top }: HomeProps) {
       <Head>
         <title>Hits</title>
       </Head>
-      
+
       <div className="pl-4 pr-4 md:pl-0 md:pr-0 mt-24 md:w-[900px] max-screen-lg mx-auto">
         <div className="flex flex-col items-center justify-center">
           <h1 className="font-bold text-5xl mb-2">hits</h1>
@@ -44,8 +44,8 @@ export default function Home({ top }: HomeProps) {
                   <Input
                     value={
                       type === "HTML"
-                        ? `<img src="https://hits-app.vercel.app/hits?url=${url}" />`
-                        : `![Hits](https://hits-app.vercel.app/hits?url=${url})`
+                        ? `<img src="${FRONTEND_URL}/hits?url=${url}" />`
+                        : `![Hits](${FRONTEND_URL}/hits?url=${url})`
                     }
                     disabled
                     copyable
@@ -57,7 +57,7 @@ export default function Home({ top }: HomeProps) {
 
           <div className="flex flex-col mt-6 p-10 w-full gap-4 border border-secondary bg-primary rounded-lg">
             {top.map((hit, i) => (
-              <Hit key={i} hit={{ i, ...hit }} />
+              <Hit key={i} index={i} hit={hit} />
             ))}
           </div>
         </div>
@@ -69,9 +69,9 @@ export default function Home({ top }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const top: HitResponse = await fetch(`${API_URL}/v1/top`).then((res) =>
-    res.json()
-  );
+  const top: HitResponse = await fetch(`${API_URL}/v1/leaderboard`, {
+    next: { revalidate: 60 },
+  }).then((res) => res.json());
 
   return {
     props: { top: top.data },

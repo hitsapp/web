@@ -32,13 +32,13 @@ export const Input = ({ className, copyable = false, ...props }: InputProps) => 
         className={`outline-none w-full py-3 border border-secondary bg-primary rounded-lg px-5 text-white ${className}`}
         {...props}
       />
-      {copyable && (
+      {copyable ? (
         <Clipboard
           size={20}
           onClick={handleCopy}
           className="text-lightGray hover:text-white transition-all duration-300 ml-2 cursor-pointer"
         />
-      )}
+      ) : null}
     </div>
   );
 };
