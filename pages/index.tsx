@@ -9,10 +9,10 @@ import { HitResponse } from "@/types/hit-response";
 import Head from "next/head";
 
 interface HomeProps {
-  top: HitType[];
+  leaderboard: HitType[];
 }
 
-export default function Home({ top }: HomeProps) {
+export default function Home({ leaderboard }: HomeProps) {
   const [url, setUrl] = useState("");
 
   return (
@@ -56,7 +56,7 @@ export default function Home({ top }: HomeProps) {
           </div>
 
           <div className="flex flex-col mt-6 p-10 w-full gap-4 border border-secondary bg-primary rounded-lg">
-            {top.map((hit, i) => (
+            {leaderboard.map((hit, i) => (
               <Hit key={i} index={i} hit={hit} />
             ))}
           </div>
@@ -69,11 +69,11 @@ export default function Home({ top }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const top: HitResponse = await fetch(`${API_URL}/v1/leaderboard`, {
+  const leaderboard: HitResponse = await fetch(`${API_URL}/v1/leaderboard`, {
     next: { revalidate: 60 },
   }).then((res) => res.json());
 
   return {
-    props: { top: top.data },
+    props: { leaderboard: leaderboard.data },
   };
 };
